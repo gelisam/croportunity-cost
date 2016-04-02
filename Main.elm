@@ -46,12 +46,17 @@ update action plants = case action of
 -- STYLES
 
 
+centered_style : Attribute
+centered_style = Attributes.style
+  [ ("margin", "auto")
+  , ("width", "40em")
+  ]
+
 row_style : Attribute
 row_style = Attributes.style
   [ ("padding", "0.5em")
   , ("border", "1px solid grey")
   , ("margin", "0.25em")
-  , ("width", "40em")
   ]
 
 button_style : Attribute
@@ -90,8 +95,9 @@ plant_html plant = Html.div [row_style]
 -- VIEW
 
 view : Model -> Html
-view plants = Html.div []
-  ( List.map seed_html all_plants
+view plants = Html.div [centered_style]
+  ( [Html.h1 [] [Html.text "Croportunity Cost!"]]
+ ++ List.map seed_html all_plants
  ++ List.map plant_html plants
   )
 
