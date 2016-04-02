@@ -1,5 +1,9 @@
 import Html exposing (Html, Attribute)
 import Html.Attributes as Attributes
+import Html.Events as Events
+
+
+-- MODEL
 
 
 type Plant
@@ -12,6 +16,31 @@ type Plant
 
 all_plants : List Plant
 all_plants = [Lettuce, Potato, Carrot, Watermelon, Flower, Tree]
+
+
+type alias Model = List Plant
+
+model : Signal Model
+model = Signal.foldp update [] actions.signal
+
+
+-- UPDATE
+
+
+type Action
+  = NoOp
+  | PlantSeed Plant
+
+actions : Signal.Mailbox Action
+actions = Signal.mailbox NoOp
+
+
+update : Action -> Model -> Model
+update action plants = case action of
+  NoOp ->
+    plants
+  PlantSeed plant ->
+    plant :: plants
 
 
 -- STYLES
@@ -47,7 +76,9 @@ plant_name plant = case plant of
 seed_html : Plant -> Html
 seed_html plant = Html.div [row_style]
   [ Html.text (plant_name plant ++ " seed")
-  , Html.button [button_style] [Html.text "plant"]
+  , Html.button
+      [button_style, Events.onClick actions.address (PlantSeed plant)]
+      [Html.text "plant"]
   ]
 
 plant_html : Plant -> Html
@@ -56,8 +87,13 @@ plant_html plant = Html.div [row_style]
   ]
 
 
-main : Html
-main = Html.div []
+-- VIEW
+
+view : Model -> Html
+view plants = Html.div []
   ( List.map seed_html all_plants
- ++ List.map plant_html all_plants
+ ++ List.map plant_html plants
   )
+
+main : Signal Html
+main = Signal.map view model
