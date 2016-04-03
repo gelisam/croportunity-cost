@@ -70,12 +70,29 @@ type Action
 actions : Signal.Mailbox Action
 actions = Signal.mailbox NoOp
 
+
+timestep_growth : Growth -> Maybe Growth
+timestep_growth growth = case growth of
+  Growing 1 -> Just Grown
+  Growing n -> Just (Growing (n - 1))
+  Grown     -> Just Spoiled
+  Spoiled   -> Nothing
+
+timestep_crop : Crop -> Maybe Crop
+timestep_crop crop = case timestep_growth crop.growth of
+  Nothing     -> Nothing
+  Just growth -> Just {crop | growth = growth}
+
+timestep_crops : List Crop -> List Crop
+timestep_crops = List.filterMap timestep_crop
+
+update_crops : Action -> List Crop -> List Crop
+update_crops action crops = case action of
+  NoOp            -> crops
+  PlantSeed plant -> (plant_crop plant :: crops)
+
 update : Action -> Model -> Model
-update action crops = case action of
-  NoOp ->
-    crops
-  PlantSeed plant ->
-    plant_crop plant :: crops
+update action = timestep_crops >> update_crops action
 
 
 -- STYLES
