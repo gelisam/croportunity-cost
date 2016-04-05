@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 17
+ETag: W/"11-+8JLzHoXlHWPwTJ/z+va9g"
+set-cookie: connect.sid=s%3A984Z39tQyhSVxeyR1xb2wKOvCseom8nL.XVOHwvHdBc8Ly8JNbQV7RGOW10rt430flEXDGXQszFQ; Path=/; HttpOnly
+Date: Tue, 05 Apr 2016 14:27:45 GMT
+Connection: keep-alive
+
+{"hello":"world"}

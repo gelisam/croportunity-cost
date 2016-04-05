@@ -3,7 +3,8 @@ import Effects exposing (Effects, Never)
 import Html exposing (Html)
 import Html.Events as Events
 import Http
-import Json.Decode as Json exposing ((:=))
+import Json.Decode as Decode exposing ((:=))
+import Json.Encode as Encode
 import Signal exposing (Signal, Address)
 import StartApp exposing (App)
 import Task exposing (Task)
@@ -25,13 +26,18 @@ port tasks =
 -- HTTP
 
 endpoint : String
-endpoint = "http://localhost:8001/endpoint"
+endpoint = "http://localhost:3000/signup"
 
 http_get : Task Http.Error String
-http_get = Http.get ("hello" := Json.string) endpoint
+http_get = Http.get ("hello" := Decode.string) endpoint
 
 http_post : Task Http.Error String
-http_post = Http.post ("hello" := Json.string) endpoint Http.empty
+http_post =
+  let payload = Encode.object
+        [ ("hello", Encode.string "who")
+        ]
+      body = Http.string (Encode.encode 0 payload)
+  in  Http.post ("hello" := Decode.string) endpoint body
 
 wrap_http_task : Task Http.Error a -> Effects Action
 wrap_http_task task =
