@@ -26,7 +26,7 @@ port tasks =
 -- HTTP
 
 endpoint : String
-endpoint = "http://localhost:3000/signup"
+endpoint = "https://app.siftnlp.com/signup"
 
 http_get : Task Http.Error String
 http_get = Http.get ("hello" := Decode.string) endpoint
@@ -34,7 +34,12 @@ http_get = Http.get ("hello" := Decode.string) endpoint
 http_post : Task Http.RawError Http.Response
 http_post =
   let payload = Encode.object
-        [ ("hello", Encode.string "who")
+        [ ("email", Encode.string "marina.artigas+6@keatext.com")
+        , ("firstName", Encode.string "Marina")
+        , ("lastName", Encode.string "Artigas")
+        , ("organizationName", Encode.string "Keatext")
+        , ("password", Encode.string "asdfasdf")
+        , ("passwordConfirmation", Encode.string "asdfasdf")
         ]
       body = Http.string (Encode.encode 0 payload)
       request =
