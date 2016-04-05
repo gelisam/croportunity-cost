@@ -1,0 +1,12 @@
+OPTIONS /signup HTTP/1.1
+Host: localhost:8001
+Connection: keep-alive
+Access-Control-Request-Method: POST
+Origin: http://0.0.0.0:8000
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+Access-Control-Request-Headers: accept, accept-language, content-type
+Accept: */*
+Referer: http://0.0.0.0:8000/HttpTest.elm
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
+

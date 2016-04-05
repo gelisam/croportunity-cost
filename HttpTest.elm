@@ -31,15 +31,25 @@ endpoint = "http://localhost:3000/signup"
 http_get : Task Http.Error String
 http_get = Http.get ("hello" := Decode.string) endpoint
 
-http_post : Task Http.Error String
+http_post : Task Http.RawError Http.Response
 http_post =
   let payload = Encode.object
         [ ("hello", Encode.string "who")
         ]
       body = Http.string (Encode.encode 0 payload)
-  in  Http.post ("hello" := Decode.string) endpoint body
+      request =
+        { verb = "POST"
+        , headers =
+            [ ("Content-Type", "application/json;charset=UTF-8")
+            , ("Accept", "*/*")
+            , ("Accept-Language", "fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4")
+            ]
+        , url = endpoint
+        , body = body
+        }
+  in  Http.send Http.defaultSettings request
 
-wrap_http_task : Task Http.Error a -> Effects Action
+wrap_http_task : Task x a -> Effects Action
 wrap_http_task task =
   task
     |> Task.toResult
