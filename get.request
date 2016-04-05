@@ -1,0 +1,5 @@
+GET /us/90210 HTTP/1.1
+Host: api.zippopotam.us
+User-Agent: curl/7.43.0
+Accept: */*
+

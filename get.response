@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Date: Tue, 05 Apr 2016 01:48:31 GMT
+Server: Apache/2.4.7
+Content-Length: 225
+X-Cache: hit
+Charset: UTF-8
+Vary: Accept-Encoding
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: application/json
+
+{"post code": "90210", "country": "United States", "country abbreviation": "US", "places": [{"place name": "Beverly Hills", "longitude": "-118.4065", "state": "California", "state abbreviation": "CA", "latitude": "34.0901"}]}

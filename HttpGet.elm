@@ -7,7 +7,7 @@ import Task exposing (..)
 
 lookupZipCode : String -> Task Http.Error (List String)
 lookupZipCode query =
-    Http.get places ("http://api.zippopotam.us/us/" ++ query)
+    Http.get places ("http://localhost:8001/us/" ++ query)
 
 
 places : Json.Decoder (List String)
