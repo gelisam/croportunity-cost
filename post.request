@@ -1,11 +1,13 @@
 POST /signup HTTP/1.1
-Host: localtest.siftnlp.com:8001
+Host: localhost:8001
 Connection: keep-alive
-Content-Length: 0
+Content-Length: 15
 Origin: http://0.0.0.0:8000
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+Content-Type: text/plain;charset=UTF-8
 Accept: */*
 Referer: http://0.0.0.0:8000/HttpTest.elm
 Accept-Encoding: gzip, deflate
 Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
 
+{"hello":"who"}
