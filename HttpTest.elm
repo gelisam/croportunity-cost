@@ -2,7 +2,7 @@ import Debug
 import Effects exposing (Effects, Never)
 import Html exposing (Html)
 import Http
-import Json.Decode as Json exposing ((:=))
+import Json.Decode as Json
 import Signal exposing (Signal, Address)
 import StartApp exposing (App)
 import Task exposing (Task)
@@ -23,17 +23,8 @@ port tasks =
 
 -- HTTP
 
-lookupZipCode : String -> Task Http.Error (List String)
-lookupZipCode query =
-  Http.post places ("http://localhost:8001/us/" ++ query) Http.empty
-
-places : Json.Decoder (List String)
-places =
-  let place =
-        Json.object2 (\city state -> city ++ ", " ++ state)
-          ("place name" := Json.string)
-          ("state" := Json.string)
-  in  "places" := Json.list place
+http_post : Task Http.Error (List String)
+http_post = Http.post (Json.list Json.string) ("http://localhost:8001/endpoint") Http.empty
 
 
 -- MODEL
@@ -43,7 +34,7 @@ type alias Model = List String
 init : (Model, Effects Action)
 init =
   let task : Task Never Action
-      task = lookupZipCode "90210"
+      task = http_post
           |> Task.toResult
           |> Task.map (toString >> Log)
   in  ([], Effects.task task)
