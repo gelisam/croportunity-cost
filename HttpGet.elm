@@ -25,7 +25,7 @@ port tasks =
 
 lookupZipCode : String -> Task Http.Error (List String)
 lookupZipCode query =
-  Http.get places ("http://localhost:8001/us/" ++ query)
+  Http.post places ("http://localhost:8001/us/" ++ query) Http.empty
 
 places : Json.Decoder (List String)
 places =
